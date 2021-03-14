@@ -7,20 +7,60 @@ class GroceryStoreList extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = GroceryProvider.of(context).bloc;
     return Container(
-      color: Colors.green,
+      color: backgroundColor,
+      padding: const EdgeInsets.only(top: cartBarHeight),
       child: StaggeredDualView(
+        aspectRatio: 0.82,
+        itemPercent: 0.25,
         itemBuilder: (context, index) {
           final product = bloc.catalog[index];
           return Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            elevation: 10,
             color: Colors.white,
-            child: Column(
-              children: [
-                Image.asset(
-                  product.image,
-                  fit: BoxFit.cover,
-                  height: 100,
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      product.image,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    '\$' + product.price.toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 19,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Text(
+                    product.name,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(
+                    product.weight,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -47,11 +87,13 @@ class StaggeredDualView extends StatelessWidget {
   final int itemCount;
   final double spacing;
   final double aspectRatio;
+  final double itemPercent;
 
   const StaggeredDualView(
       {Key key,
       @required this.itemBuilder,
       @required this.itemCount,
+      @required this.itemPercent,
       this.spacing = 0.0,
       this.aspectRatio = 0.5})
       : super(key: key);
@@ -79,7 +121,8 @@ class StaggeredDualView extends StatelessWidget {
             itemCount: itemCount,
             itemBuilder: (context, index) {
               return Transform.translate(
-                offset: Offset(0.0, index.isOdd ? itemHeight * 0.5 : 0.0),
+                offset:
+                    Offset(0.0, index.isOdd ? itemHeight * itemPercent : 0.0),
                 child: itemBuilder(context, index),
               );
             },

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_store/provider/grocery_provider.dart';
-
 import 'package:grocery_store/bloc/grocery_store_bloc.dart';
 import 'package:grocery_store/screens/grocery_store_list.dart';
 
@@ -81,15 +80,17 @@ class _GroceryStoreHomeState extends State<GroceryStoreHome> {
                           right: 0,
                           top: _getTopForWhitePanel(bloc.groceryState, size),
                           height: size.height - kToolbarHeight,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(30),
-                              ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
                             ),
-                            child: GroceryStoreList(),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: GroceryStoreList(),
+                            ),
                           ),
                         ),
                         AnimatedPositioned(

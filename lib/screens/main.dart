@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:grocery_store/provider/grocery_provider.dart';
 import 'package:grocery_store/bloc/grocery_store_bloc.dart';
 import 'package:grocery_store/screens/grocery_store_list.dart';
+import 'package:grocery_store/utils/Colors.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+
+const cartBarHeight = 170.0;
+const _panelTransition = Duration(microseconds: 500);
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,10 +22,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-const backgroundColor = Color(0XFFF6F5F2);
-const cartBarHeight = 170.0;
-const _panelTransition = Duration(microseconds: 500);
 
 class GroceryStoreHome extends StatefulWidget {
   @override
@@ -63,57 +64,58 @@ class _GroceryStoreHomeState extends State<GroceryStoreHome> {
     return GroceryProvider(
       bloc: bloc,
       child: AnimatedBuilder(
-          animation: bloc,
-          builder: (context, _) {
-            return Scaffold(
-              backgroundColor: Colors.black,
-              body: Column(
-                children: [
-                  _AppBarGrocery(),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        AnimatedPositioned(
-                          curve: Curves.decelerate,
-                          duration: _panelTransition,
-                          left: 0,
-                          right: 0,
-                          top: _getTopForWhitePanel(bloc.groceryState, size),
-                          height: size.height - kToolbarHeight,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
+        animation: bloc,
+        builder: (context, _) {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: Column(
+              children: [
+                _AppBarGrocery(),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      AnimatedPositioned(
+                        curve: Curves.decelerate,
+                        duration: _panelTransition,
+                        left: 0,
+                        right: 0,
+                        top: _getTopForWhitePanel(bloc.groceryState, size),
+                        height: size.height - kToolbarHeight,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                             ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: GroceryStoreList(),
-                            ),
+                            child: GroceryStoreList(),
                           ),
                         ),
-                        AnimatedPositioned(
-                          curve: Curves.decelerate,
-                          duration: _panelTransition,
-                          left: 0,
-                          right: 0,
-                          top: _getTopForBlackPanel(bloc.groceryState, size),
-                          height: size.height,
-                          child: GestureDetector(
-                            onVerticalDragUpdate: _onVerticalGesture,
-                            child: Container(
-                              color: Colors.black,
-                            ),
+                      ),
+                      AnimatedPositioned(
+                        curve: Curves.decelerate,
+                        duration: _panelTransition,
+                        left: 0,
+                        right: 0,
+                        top: _getTopForBlackPanel(bloc.groceryState, size),
+                        height: size.height,
+                        child: GestureDetector(
+                          onVerticalDragUpdate: _onVerticalGesture,
+                          child: Container(
+                            color: Colors.black,
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          }),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -134,10 +136,11 @@ class _AppBarGrocery extends StatelessWidget {
             width: 10.0,
           ),
           Expanded(
-              child: Text(
-            "Fruits and vegetables",
-            style: TextStyle(color: Colors.black),
-          )),
+            child: Text(
+              "Fruits and vegetables",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
           IconButton(icon: Icon(Icons.settings), onPressed: () => null)
         ],
       ),

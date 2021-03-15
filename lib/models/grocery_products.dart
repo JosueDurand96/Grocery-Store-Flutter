@@ -68,7 +68,7 @@ const groceryProducts = <GroceryProduct>[
       weight: '500g'),
   GroceryProduct(
       price: 13.40,
-      name: 'Platano',
+      name: 'Plátano',
       description:
           'Persea americana, llamado popularmente aguacate, ​​​ palto ​​ o aguacatero, ​ es una especie arbórea del género Persea perteneciente a la familia Lauraceae, cuyo fruto, el aguacate​​ o',
       image: 'assets/grocery_store/platano.jpeg',

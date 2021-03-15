@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_store/provider/grocery_provider.dart';
 import 'package:grocery_store/screens/grocery_store_details.dart';
-import 'package:grocery_store/screens/main.dart';
+import 'package:grocery_store/main.dart';
 import 'package:grocery_store/utils/Colors.dart';
 import 'package:grocery_store/widgets/staggered_dual_view.dart';
 
@@ -11,7 +11,7 @@ class GroceryStoreList extends StatelessWidget {
     final bloc = GroceryProvider.of(context).bloc;
     return Container(
       color: backgroundColor,
-      padding: const EdgeInsets.only(top: cartBarHeight, left: 10,right: 10),
+      padding: const EdgeInsets.only(top: cartBarHeight, left: 10, right: 10),
       child: StaggeredDualView(
         aspectRatio: 0.82,
         itemPercent: 0.25,
@@ -22,11 +22,15 @@ class GroceryStoreList extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 650),
                   pageBuilder: (context, animation, __) {
                     return FadeTransition(
                       opacity: animation,
                       child: GroceryStoreDetails(
                         product: product,
+                        onProductAdded: (){
+                          bloc.addProduct(product);
+                        }
                       ),
                     );
                   },
@@ -35,8 +39,9 @@ class GroceryStoreList extends StatelessWidget {
             },
             child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              elevation: 8
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              elevation: 8,
               shadowColor: Colors.black45,
               color: Colors.white,
               child: Padding(

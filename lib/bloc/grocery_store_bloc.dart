@@ -18,6 +18,11 @@ class GroceryStoreBloc with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteProduct(GroceryProductItem productItem) {
+    cart.remove(productItem);
+    notifyListeners();
+  }
+
   void addProduct(GroceryProduct product) {
     for (GroceryProductItem item in cart) {
       if (item.product.name == product.name) {
@@ -30,7 +35,13 @@ class GroceryStoreBloc with ChangeNotifier {
     notifyListeners();
   }
 
-  int totalCartElements() =>  cart.fold<int>(0, (previousValue, element) => previousValue+element.quantity);
+  int totalCartElements() => cart.fold<int>(
+      0, (previousValue, element) => previousValue + element.quantity);
+
+  double totalPriceElements() => cart.fold<double>(
+      0.0,
+      (previousValue, element) =>
+          previousValue + (element.quantity * element.product.price));
 }
 
 class GroceryProductItem {

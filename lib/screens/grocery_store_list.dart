@@ -11,10 +11,11 @@ class GroceryStoreList extends StatelessWidget {
     final bloc = GroceryProvider.of(context).bloc;
     return Container(
       color: backgroundColor,
-      padding: const EdgeInsets.only(top: cartBarHeight),
+      padding: const EdgeInsets.only(top: cartBarHeight, left: 10,right: 10),
       child: StaggeredDualView(
         aspectRatio: 0.82,
         itemPercent: 0.25,
+        spacing: 20,
         itemBuilder: (context, index) {
           final product = bloc.catalog[index];
           return GestureDetector(
@@ -35,7 +36,8 @@ class GroceryStoreList extends StatelessWidget {
             child: Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0)),
-              elevation: 10,
+              elevation: 8
+              shadowColor: Colors.black45,
               color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
